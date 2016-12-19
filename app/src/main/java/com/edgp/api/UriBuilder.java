@@ -3,10 +3,19 @@ package com.edgp.api;
 import android.content.Context;
 import android.net.Uri;
 
-/**
- * Created by daba on 2016-12-16.
- */
+import com.edgp.core.SettingsManager;
 
+/**
+ * eDGP uri builder
+ *
+ * Publishers: http://api.embuk1.gazetaprawna.pl/KcroS9M8HgZmk01VumNJ6w
+ * Titles: http://api.embuk1.gazetaprawna.pl/KcroS9M8HgZmk01VumNJ6w/1/titles
+ * IssueList: http://api.embuk1.gazetaprawna.pl/KcroS9M8HgZmk01VumNJ6w/listissues/4
+ * Issue: http://api.embuk1.gazetaprawna.pl/KcroS9M8HgZmk01VumNJ6w/issue/850
+ * Articles: http://api.embuk1.gazetaprawna.pl/KcroS9M8HgZmk01VumNJ6w/pdf/4577
+ * Cover: http://api.embuk1.gazetaprawna.pl/KcroS9M8HgZmk01VumNJ6w/thumb/539648/200 ({coverId}/{imageSize})
+ *
+ */
 public class UriBuilder {
 
     private static final String TITLES_URI = "titles";
@@ -29,20 +38,27 @@ public class UriBuilder {
         settingsManager = new SettingsManager(context);
     }
 
-    private Uri baseUri() {
+    public Uri baseUri() {
         return new Uri.Builder()
-                .scheme("http")
+                .scheme(settingsManager.getScheme())
+                .authority(settingsManager.getAuthority())
+                .build();
+    }
+
+    public Uri baseUriWithApi() {
+        return new Uri.Builder()
+                .scheme(settingsManager.getScheme())
                 .authority(settingsManager.getAuthority())
                 .appendPath(settingsManager.getApiKey())
                 .build();
     }
 
     public Uri publishersUri() {
-        return baseUri();
+        return baseUriWithApi();
     }
 
     public Uri titlesUri(int publisherId) {
-        return baseUri()
+        return baseUriWithApi()
                 .buildUpon()
                 .appendPath(String.valueOf(publisherId))
                 .appendPath(TITLES_URI)
@@ -50,7 +66,7 @@ public class UriBuilder {
     }
 
     public Uri listIssuesUri(int titleId) {
-        return baseUri()
+        return baseUriWithApi()
                 .buildUpon()
                 .appendPath(LIST_ISSUES_URI)
                 .appendPath(String.valueOf(titleId))
@@ -58,7 +74,7 @@ public class UriBuilder {
     }
 
     public Uri issueUri(int issueId) {
-        return baseUri()
+        return baseUriWithApi()
                 .buildUpon()
                 .appendPath(ISSUE_URI)
                 .appendPath(String.valueOf(issueId))
@@ -66,7 +82,7 @@ public class UriBuilder {
     }
 
     public Uri pdfUri(int pdfId) {
-        return baseUri()
+        return baseUriWithApi()
                 .buildUpon()
                 .appendPath(PDF_URI)
                 .appendPath(String.valueOf(pdfId))
@@ -74,7 +90,7 @@ public class UriBuilder {
     }
 
     public Uri coverUri(int coverId, int imageSize) {
-        return baseUri()
+        return baseUriWithApi()
                 .buildUpon()
                 .appendPath(COVER_URI)
                 .appendPath(String.valueOf(coverId))

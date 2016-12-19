@@ -2,6 +2,8 @@ package com.edgp.api;
 
 import android.net.Uri;
 
+import com.edgp.core.SettingsManager;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

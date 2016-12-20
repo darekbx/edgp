@@ -1,3 +1,7 @@
+
+```
+#!java
+/*
 DGP App:
 
  - Settings Screen: 
@@ -21,3 +25,5 @@ DGP App:
  - Articles screen (from Pdf/Articles) (ScrollingActivity):
    - PageView of articles filtered by type="text" (name, content) 
    - in PageView header article name
+*/
+```

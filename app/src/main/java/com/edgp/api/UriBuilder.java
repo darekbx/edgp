@@ -3,7 +3,7 @@ package com.edgp.api;
 import android.content.Context;
 import android.net.Uri;
 
-import com.edgp.core.SettingsManager;
+import com.edgp.managers.SettingsManager;
 
 /**
  * eDGP uri builder

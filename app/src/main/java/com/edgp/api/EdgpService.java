@@ -3,7 +3,7 @@ package com.edgp.api;
 import android.content.Context;
 import android.support.annotation.IntRange;
 
-import com.edgp.core.SettingsManager;
+import com.edgp.managers.SettingsManager;
 import com.edgp.model.App;
 import com.edgp.model.Issue;
 import com.edgp.model.IssueExtended;
@@ -42,7 +42,7 @@ public class EdgpService {
 
     private EdgpRestService buildRestService() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(UriBuilder.getInstance(context).baseUri().toString() + "/")
+                .baseUrl(getBaseUri())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -119,5 +119,9 @@ public class EdgpService {
     
     private String getApiKey() {
         return settingsManager.getApiKey();
+    }
+
+    private String getBaseUri() {
+        return UriBuilder.getInstance(context).baseUri().toString() + "/";
     }
 }

@@ -1,4 +1,4 @@
-package com.edgp.core;
+package com.edgp.managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

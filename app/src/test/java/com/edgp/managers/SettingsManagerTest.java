@@ -1,6 +1,4 @@
-package com.edgp.core;
-
-import com.edgp.core.SettingsManager;
+package com.edgp.managers;
 
 import org.junit.After;
 import org.junit.Before;

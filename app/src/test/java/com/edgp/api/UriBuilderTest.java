@@ -2,7 +2,7 @@ package com.edgp.api;
 
 import android.net.Uri;
 
-import com.edgp.core.SettingsManager;
+import com.edgp.managers.SettingsManager;
 
 import org.junit.Before;
 import org.junit.Test;

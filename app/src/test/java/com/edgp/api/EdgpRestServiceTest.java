@@ -3,7 +3,7 @@ package com.edgp.api;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.edgp.core.SettingsManager;
+import com.edgp.managers.SettingsManager;
 import com.edgp.model.App;
 import com.edgp.model.Issue;
 import com.edgp.model.IssueExtended;
@@ -17,10 +17,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.List;
 
 import static org.junit.Assert.*;

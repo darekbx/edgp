@@ -1,5 +1,7 @@
 package com.edgp.model;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -28,4 +30,6 @@ public class Title {
     @SerializedName("coverId")
     @Expose
     public int coverId;
+
+    public Bitmap cover;
 }

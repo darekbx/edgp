@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">edgp</string>
+    <string name="app_name">eDGP</string>
+
+    <string name="progress_app_1">Loading app...</string>
+    <string name="progress_app_2">Loaded app with id %d</string>
+    <string name="progress_titles_1">Loading titles for app id = %d...</string>
+    <string name="progress_titles_2">Loaded %d titles</string>
+    <string name="progress_end">Loading completed</string>
+
 </resources>

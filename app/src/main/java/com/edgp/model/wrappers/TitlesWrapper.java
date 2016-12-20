@@ -4,7 +4,7 @@ import com.edgp.model.Title;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by daba on 2016-12-19.
@@ -14,5 +14,5 @@ public class TitlesWrapper {
 
     @SerializedName("Titles")
     @Expose
-    public List<Title> titles = null;
+    public ArrayList<Title> titles = null;
 }

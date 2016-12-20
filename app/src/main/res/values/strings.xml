@@ -6,5 +6,6 @@
     <string name="progress_titles_1">Loading titles for app id = %d...</string>
     <string name="progress_titles_2">Loaded %d titles</string>
     <string name="progress_end">Loading completed</string>
+    <string name="progress_error">An error occured, %s</string>
 
 </resources>

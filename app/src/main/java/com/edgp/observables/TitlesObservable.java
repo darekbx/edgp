@@ -8,10 +8,11 @@ import com.edgp.model.App;
 import com.edgp.model.Title;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.exceptions.Exceptions;
 import rx.functions.Action0;
 import rx.functions.Func1;
 
@@ -19,7 +20,7 @@ import rx.functions.Func1;
  * Created by daba on 2016-12-20.
  */
 
-public class SplashObservable {
+public class TitlesObservable {
 
     public interface Listener {
         void onProgress(int value, int max, String description);
@@ -29,13 +30,13 @@ public class SplashObservable {
     private EdgpService service;
     private Listener listener;
 
-    public SplashObservable(Context context, Listener listener) {
+    public TitlesObservable(Context context, Listener listener) {
         this.context = context;
         this.service = new EdgpService(context);
         this.listener = listener;
     }
 
-    public Observable<List<Title>> getSplash() {
+    public Observable<ArrayList<Title>> getSplash() {
         return Observable
                 .just((Void)null)
                 .flatMap(createAppFunc())
@@ -55,25 +56,23 @@ public class SplashObservable {
                     listener.onProgress(1, 4, context.getString(R.string.progress_app_2, app.publisherId));
                     return Observable.just(app);
                 } catch (IOException e) {
-                    Observable.error(e);
-                    return null;
+                    throw Exceptions.propagate(e);
                 }
             }
         };
     }
 
-    private Func1<App, Observable<List<Title>>> createTitlesFunc() {
-        return new Func1<App, Observable<List<Title>>>() {
+    private Func1<App, Observable<ArrayList<Title>>> createTitlesFunc() {
+        return new Func1<App, Observable<ArrayList<Title>>>() {
             @Override
-            public Observable<List<Title>> call(App app) {
+            public Observable<ArrayList<Title>> call(App app) {
                 listener.onProgress(2, 4, context.getString(R.string.progress_titles_1, app.publisherId));
                 try {
-                    List<Title> titles = service.getTitles(app.publisherId);
+                    ArrayList<Title> titles = service.getTitles(app.publisherId);
                     listener.onProgress(3, 4, context.getString(R.string.progress_titles_2, titles.size()));
                     return Observable.just(titles);
                 } catch (IOException e) {
-                    Observable.error(e);
-                    return null;
+                    throw Exceptions.propagate(e);
                 }
             }
         };

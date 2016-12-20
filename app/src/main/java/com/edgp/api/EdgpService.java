@@ -16,6 +16,7 @@ import com.edgp.model.wrappers.PdfWrapper;
 import com.edgp.model.wrappers.TitlesWrapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -61,7 +62,7 @@ public class EdgpService {
         return null;
     }
 
-    public List<Title> getTitles(int publisherId) throws IOException {
+    public ArrayList<Title> getTitles(int publisherId) throws IOException {
         Response<TitlesWrapper> response = edgpRestService.getTitles(getApiKey(), publisherId).execute();
         if (response.isSuccessful()) {
             TitlesWrapper wrapper = response.body();

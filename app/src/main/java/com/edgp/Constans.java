@@ -6,5 +6,5 @@ package com.edgp;
 
 public class Constans {
 
-    public static final int IMAGE_SIZE = 400;
+    public static final int IMAGE_SIZE = 450;
 }

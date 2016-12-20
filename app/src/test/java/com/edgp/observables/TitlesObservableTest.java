@@ -28,7 +28,7 @@ import static org.mockito.Mockito.verify;
  */
 @Config(sdk = 23, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
-public class SplashObservableTest {
+public class TitlesObservableTest {
 
     private CountDownLatch lock = new CountDownLatch(1);
 
@@ -39,11 +39,11 @@ public class SplashObservableTest {
 
     @Test
     public void getSplash() throws Exception {
-        SplashObservable.Listener listener = mock(SplashObservable.Listener.class);
+        TitlesObservable.Listener listener = mock(TitlesObservable.Listener.class);
         final Observer<? super List<Title>> observer = mock(Observer.class);
-        SplashObservable splashObservable = new SplashObservable(RuntimeEnvironment.application, listener);
+        TitlesObservable titlesObservable = new TitlesObservable(RuntimeEnvironment.application, listener);
 
-        splashObservable
+        titlesObservable
                 .getSplash()
                 .subscribe(new Observer<List<Title>>() {
                     @Override

@@ -3,6 +3,7 @@ package com.edgp.api;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.edgp.Utils;
 import com.edgp.managers.SettingsManager;
 import com.edgp.model.App;
 import com.edgp.model.Issue;
@@ -33,10 +34,7 @@ public class EdgpRestServiceTest {
 
     @Before
     public void setUp() {
-        SettingsManager settingsManager = new SettingsManager(RuntimeEnvironment.application);
-        settingsManager.setScheme("http");
-        settingsManager.setAuthority("api.embuk1.gazetaprawna.pl");
-        settingsManager.setApiKey("KcroS9M8HgZmk01VumNJ6w");
+        Utils.initializeSettings();
         service = new EdgpService(RuntimeEnvironment.application);
     }
 

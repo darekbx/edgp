@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <import type="com.edgp.ui.issues.Utils" />
+        <import type="com.edgp.ui.issues.BookletUtils" />
         <variable name="booklet" type="com.edgp.model.Booklet" />
     </data>
     <LinearLayout
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="@{booklet.name}"
             android:textSize="20dp"
-            android:textColor="@{Utils.hasValidBooklet(booklet) ? @color/default_font : @color/inactive_font}"
+            android:textColor="@{BookletUtils.hasValidBooklet(booklet) ? @color/default_font : @color/inactive_font}"
             />
 
     </LinearLayout>

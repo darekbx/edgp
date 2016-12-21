@@ -32,12 +32,13 @@ public class TitlesActivity extends BaseActivity implements BaseObservable.Liste
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
 
-        // TODO remove
+        // TODO move to serrings
         SettingsManager settingsManager = new SettingsManager(this);
         settingsManager.setScheme("http");
         settingsManager.setAuthority("api.embuk1.gazetaprawna.pl");
         settingsManager.setApiKey("KcroS9M8HgZmk01VumNJ6w");
         //
+
         prepareLoadingFragment();
     }
 
@@ -85,8 +86,10 @@ public class TitlesActivity extends BaseActivity implements BaseObservable.Liste
     }
 
     public void onTitleClick(View view) {
+        Title title = (Title)view.getTag();
         Intent intent = new Intent(this, IssuesActivity.class);
-        intent.putExtra(IssuesActivity.TITLE_ID_KEY, (int)view.getTag());
+        intent.putExtra(IssuesActivity.TITLE_ID_KEY, title.id);
+        intent.putExtra(IssuesActivity.TITLE_NAME_KEY, title.name);
         startActivity(intent);
     }
 
@@ -94,7 +97,7 @@ public class TitlesActivity extends BaseActivity implements BaseObservable.Liste
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.container, loadingFragment = new LoadingFragment())
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     private void prepareTitlesFragment(ArrayList<Title> titles) {
@@ -108,6 +111,6 @@ public class TitlesActivity extends BaseActivity implements BaseObservable.Liste
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container, titlesFragment)
-                .commit();
+                .commitAllowingStateLoss();
     }
 }

@@ -50,7 +50,7 @@ public class TitleFragment extends Fragment {
     }
 
     @BindingAdapter("tag")
-    public static void tag(View view, int id) {
-        view.setTag(id);
+    public static void tag(View view, Title title) {
+        view.setTag(title);
     }
 }

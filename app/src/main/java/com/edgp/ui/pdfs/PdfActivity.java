@@ -25,6 +25,7 @@ import rx.schedulers.Schedulers;
 public class PdfActivity extends BaseActivity implements BaseObservable.Listener {
 
     public static final String PDF_ID_KEY = "pdf_id";
+    public static final String PDF_NAME_KEY = "pdf_name";
     public static final String PDF_PARCEL_KEY = "pdf_parcel_key";
 
     private LoadingFragment loadingFragment;
@@ -35,6 +36,7 @@ public class PdfActivity extends BaseActivity implements BaseObservable.Listener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
         prepareLoadingFragment();
+        setTitle(getPdfName());
     }
 
     private void startDataRetrieval(int pdfId) {
@@ -91,11 +93,15 @@ public class PdfActivity extends BaseActivity implements BaseObservable.Listener
         return getIntent().getIntExtra(PDF_ID_KEY, 0);
     }
 
+    private String getPdfName() {
+        return getIntent().getStringExtra(PDF_NAME_KEY);
+    }
+
     private void prepareLoadingFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.container, loadingFragment = new LoadingFragment())
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     private void preparePdfFragment(Pdf pdf) {
@@ -109,6 +115,6 @@ public class PdfActivity extends BaseActivity implements BaseObservable.Listener
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container, articlesFragment)
-                .commit();
+                .commitAllowingStateLoss();
     }
 }

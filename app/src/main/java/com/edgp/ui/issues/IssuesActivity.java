@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.edgp.R;
 import com.edgp.events.FragmentReadyEvent;
+import com.edgp.model.Booklet;
 import com.edgp.model.Issue;
 import com.edgp.observables.BaseObservable;
 import com.edgp.observables.IssuesObservable;
@@ -26,6 +27,7 @@ import rx.schedulers.Schedulers;
 public class IssuesActivity extends BaseActivity implements BaseObservable.Listener {
 
     public static final String TITLE_ID_KEY = "title_id";
+    public static final String TITLE_NAME_KEY = "title_name";
     public static final String ISSUES_PARCEL_KEY = "issues_parcel_key";
 
     private LoadingFragment loadingFragment;
@@ -36,6 +38,7 @@ public class IssuesActivity extends BaseActivity implements BaseObservable.Liste
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
         prepareLoadingFragment();
+        setTitle(getTitleName());
     }
 
     private void startDataRetrieval(int titleId) {
@@ -83,20 +86,28 @@ public class IssuesActivity extends BaseActivity implements BaseObservable.Liste
     }
 
     public void onBookletClick(View view) {
-        Intent intent = new Intent(this, PdfActivity.class);
-        intent.putExtra(PdfActivity.PDF_ID_KEY, (int)view.getTag());
-        startActivity(intent);
+        Booklet booklet = (Booklet)view.getTag();
+        if (BookletUtils.hasValidBooklet(booklet)) {
+            Intent intent = new Intent(this, PdfActivity.class);
+            intent.putExtra(PdfActivity.PDF_ID_KEY, booklet.bookletPdfs.get(0).id);
+            intent.putExtra(PdfActivity.PDF_NAME_KEY, booklet.name);
+            startActivity(intent);
+        }
     }
 
     private int getTitleId() {
         return getIntent().getIntExtra(TITLE_ID_KEY, 0);
     }
 
+    private String getTitleName() {
+        return getIntent().getStringExtra(TITLE_NAME_KEY);
+    }
+
     private void prepareLoadingFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.container, loadingFragment = new LoadingFragment())
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     private void prepareIssuesFragment(ArrayList<Issue> issues) {
@@ -110,6 +121,6 @@ public class IssuesActivity extends BaseActivity implements BaseObservable.Liste
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container, issuesFragment)
-                .commit();
+                .commitAllowingStateLoss();
     }
 }

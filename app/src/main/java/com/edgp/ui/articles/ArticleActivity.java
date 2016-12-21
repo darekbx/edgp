@@ -1,6 +1,7 @@
 package com.edgp.ui.articles;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.TextView;
 
 import com.edgp.R;
@@ -28,6 +29,7 @@ public class ArticleActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         Article article = getIntent().getParcelableExtra(ARTICLE_KEY);
-        textView.setText(article.content);
+        setTitle(article.name);
+        textView.setText(Html.fromHtml(article.content));
     }
 }

@@ -34,6 +34,8 @@ public class Article implements Parcelable {
     public Article(Parcel in){
         this.id = in.readInt();
         this.name = in.readString();
+        this.content = in.readString();
+        this.type = in.readString();
     }
 
     public Article(int id, String name, String content, String type) {

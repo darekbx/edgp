@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:padding="8dp"
         android:onClick="onTitleClick"
-        app:tag="@{title.id}"
+        app:tag="@{title}"
         >
 
         <ProgressBar

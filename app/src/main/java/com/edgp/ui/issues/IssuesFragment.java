@@ -1,4 +1,4 @@
-package com.edgp.ui.titles;
+package com.edgp.ui.issues;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.edgp.R;
-import com.edgp.model.Title;
-import com.edgp.ui.titles.adapters.TitlesPagerAdapter;
+import com.edgp.model.Issue;
+import com.edgp.ui.issues.adapters.IssuesPagerAdapter;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  * Created by daba on 2016-12-20.
  */
 
-public class TitlesFragment extends Fragment {
+public class IssuesFragment extends Fragment {
 
     @BindView(R.id.pager)
     ViewPager pager;
@@ -36,7 +36,7 @@ public class TitlesFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
 
-        ArrayList<Title> titles = getArguments().getParcelableArrayList(TitlesActivity.TITLES_PARCEL_KEY);
-        pager.setAdapter(new TitlesPagerAdapter(getChildFragmentManager(), titles));
+        ArrayList<Issue> titles = getArguments().getParcelableArrayList(IssuesActivity.ISSUES_PARCEL_KEY);
+        pager.setAdapter(new IssuesPagerAdapter(getChildFragmentManager(), titles));
     }
 }

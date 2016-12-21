@@ -1,7 +1,7 @@
 package com.edgp.observables;
 
 import com.edgp.Utils;
-import com.edgp.model.Title;
+import com.edgp.model.Issue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.verify;
  */
 @Config(sdk = 23, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
-public class TitlesObservableTest {
+public class IssuesObservableTest {
 
     private CountDownLatch lock = new CountDownLatch(1);
 
@@ -38,14 +38,14 @@ public class TitlesObservableTest {
     }
 
     @Test
-    public void getTitles() throws Exception {
-        TitlesObservable.Listener listener = mock(TitlesObservable.Listener.class);
-        final Observer<? super List<Title>> observer = mock(Observer.class);
-        TitlesObservable titlesObservable = new TitlesObservable(RuntimeEnvironment.application, listener);
+    public void getIssues() throws Exception {
+        IssuesObservable.Listener listener = mock(IssuesObservable.Listener.class);
+        final Observer<? super List<Issue>> observer = mock(Observer.class);
+        IssuesObservable titlesObservable = new IssuesObservable(RuntimeEnvironment.application, listener);
 
         titlesObservable
-                .getTitles()
-                .subscribe(new Observer<List<Title>>() {
+                .getIssues(4)
+                .subscribe(new Observer<List<Issue>>() {
                     @Override
                     public void onCompleted() {
                         observer.onCompleted();
@@ -59,7 +59,7 @@ public class TitlesObservableTest {
                     }
 
                     @Override
-                    public void onNext(List<Title> titles) {
+                    public void onNext(List<Issue> titles) {
                         observer.onNext(titles);
                         lock.countDown();
                     }
@@ -67,11 +67,11 @@ public class TitlesObservableTest {
 
         lock.await();
 
-        verify(observer, times(1)).onNext(Matchers.anyListOf(Title.class));
+        verify(observer, times(1)).onNext(Matchers.anyListOf(Issue.class));
         verify(observer, never()).onError(any(Throwable.class));
 
-        for (int i = 0; i <= 4; i++) {
-            verify(listener, times(1)).onProgress(Matchers.eq(i), Matchers.eq(4), anyString());
+        for (int i = 0; i <= 2; i++) {
+            verify(listener, times(1)).onProgress(Matchers.eq(i), Matchers.eq(2), anyString());
         }
     }
 }

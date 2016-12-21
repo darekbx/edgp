@@ -3,7 +3,6 @@ package com.edgp.observables;
 import android.content.Context;
 
 import com.edgp.R;
-import com.edgp.api.EdgpService;
 import com.edgp.model.App;
 import com.edgp.model.Title;
 
@@ -20,23 +19,13 @@ import rx.functions.Func1;
  * Created by daba on 2016-12-20.
  */
 
-public class TitlesObservable {
-
-    public interface Listener {
-        void onProgress(int value, int max, String description);
-    }
-
-    private Context context;
-    private EdgpService service;
-    private Listener listener;
+public class TitlesObservable extends BaseObservable {
 
     public TitlesObservable(Context context, Listener listener) {
-        this.context = context;
-        this.service = new EdgpService(context);
-        this.listener = listener;
+        super(context, listener);
     }
 
-    public Observable<ArrayList<Title>> getSplash() {
+    public Observable<ArrayList<Title>> getTitles() {
         return Observable
                 .just((Void)null)
                 .flatMap(createAppFunc())

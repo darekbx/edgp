@@ -1,18 +1,15 @@
-package com.edgp.ui.titles;
+package com.edgp.ui.issues;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.edgp.R;
 import com.edgp.events.FragmentReadyEvent;
-import com.edgp.managers.SettingsManager;
-import com.edgp.model.Title;
+import com.edgp.model.Issue;
 import com.edgp.observables.BaseObservable;
-import com.edgp.observables.TitlesObservable;
+import com.edgp.observables.IssuesObservable;
 import com.edgp.ui.common.BaseActivity;
 import com.edgp.ui.common.LoadingFragment;
-import com.edgp.ui.issues.IssuesActivity;
 
 import java.util.ArrayList;
 
@@ -20,33 +17,31 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class TitlesActivity extends BaseActivity implements BaseObservable.Listener {
+/**
+ * Created by daba on 2016-12-21.
+ */
 
-    public static final String TITLES_PARCEL_KEY = "titles_parcel_key";
+public class IssuesActivity extends BaseActivity implements BaseObservable.Listener {
+
+    public static final String TITLE_ID_KEY = "title_id";
+    public static final String ISSUES_PARCEL_KEY = "issues_parcel_key";
 
     private LoadingFragment loadingFragment;
-    private TitlesFragment titlesFragment;
+    private IssuesFragment issuesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
-
-        // TODO remove
-        SettingsManager settingsManager = new SettingsManager(this);
-        settingsManager.setScheme("http");
-        settingsManager.setAuthority("api.embuk1.gazetaprawna.pl");
-        settingsManager.setApiKey("KcroS9M8HgZmk01VumNJ6w");
-        //
         prepareLoadingFragment();
     }
 
-    private void startDataRetrieval() {
-        new TitlesObservable(this, this)
-                .getTitles()
+    private void startDataRetrieval(int titleId) {
+        new IssuesObservable(this, this)
+                .getIssues(titleId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ArrayList<Title>>() {
+                .subscribe(new Observer<ArrayList<Issue>>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -58,8 +53,8 @@ public class TitlesActivity extends BaseActivity implements BaseObservable.Liste
                     }
 
                     @Override
-                    public void onNext(ArrayList<Title> titles) {
-                        prepareTitlesFragment(titles);
+                    public void onNext(ArrayList<Issue> issues) {
+                        prepareIssuesFragment(issues);
                     }
                 });
     }
@@ -67,7 +62,8 @@ public class TitlesActivity extends BaseActivity implements BaseObservable.Liste
     @Override
     protected void onBusEvent(Object event) {
         if (event instanceof FragmentReadyEvent) {
-            startDataRetrieval();
+            int titleId = getTitleId();
+            startDataRetrieval(titleId);
         }
     }
 
@@ -84,10 +80,12 @@ public class TitlesActivity extends BaseActivity implements BaseObservable.Liste
         });
     }
 
-    public void onTitleClick(View view) {
-        Intent intent = new Intent(this, IssuesActivity.class);
-        intent.putExtra(IssuesActivity.TITLE_ID_KEY, (int)view.getTag());
-        startActivity(intent);
+    public void onBookletClick(View view) {
+
+    }
+
+    private int getTitleId() {
+        return getIntent().getIntExtra(TITLE_ID_KEY, 0);
     }
 
     private void prepareLoadingFragment() {
@@ -97,17 +95,17 @@ public class TitlesActivity extends BaseActivity implements BaseObservable.Liste
                 .commit();
     }
 
-    private void prepareTitlesFragment(ArrayList<Title> titles) {
+    private void prepareIssuesFragment(ArrayList<Issue> isues) {
         if (isDestroyed()) {
             return;
         }
         Bundle bundle = new Bundle(1);
-        bundle.putParcelableArrayList(TITLES_PARCEL_KEY, titles);
-        titlesFragment = new TitlesFragment();
-        titlesFragment.setArguments(bundle);
+        bundle.putParcelableArrayList(ISSUES_PARCEL_KEY, isues);
+        issuesFragment = new IssuesFragment();
+        issuesFragment.setArguments(bundle);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, titlesFragment)
+                .replace(R.id.container, issuesFragment)
                 .commit();
     }
 }

@@ -1,4 +1,4 @@
-package com.edgp.ui.titles;
+package com.edgp.ui.common;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * Created by daba on 2016-12-20.
  */
 
-public class TitlesLoadingFragment extends Fragment {
+public class LoadingFragment extends Fragment {
 
     @BindView(R.id.progress)
     ProgressBar progress;

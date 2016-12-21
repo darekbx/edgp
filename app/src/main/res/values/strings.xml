@@ -8,4 +8,7 @@
     <string name="progress_end">Loading completed</string>
     <string name="progress_error">An error occured, %s</string>
 
+    <string name="progress_issues_1">Loading issues for title id = %d...</string>
+    <string name="progress_issues_2">Loaded %d issues</string>
+
 </resources>

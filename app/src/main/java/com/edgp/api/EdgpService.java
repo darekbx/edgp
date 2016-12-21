@@ -74,7 +74,7 @@ public class EdgpService {
         return null;
     }
 
-    public List<Issue> getIssues(int titleId) throws IOException {
+    public ArrayList<Issue> getIssues(int titleId) throws IOException {
         Response<IssuesWrapper> response = edgpRestService.listIssues(getApiKey(), titleId).execute();
         if (response.isSuccessful()) {
             IssuesWrapper wrapper = response.body();

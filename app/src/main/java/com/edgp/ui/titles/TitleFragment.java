@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,13 +39,18 @@ public class TitleFragment extends Fragment {
         fragmentTitleBinding.setTitle(title);
     }
 
-    @BindingAdapter({"loadImage"})
+    @BindingAdapter("loadImage")
     public static void loadImage(ImageView imageView, int coverId) {
         Context context = imageView.getContext();
-        Log.v("----------", UriBuilder.getInstance(context).coverUri(coverId, Constans.IMAGE_SIZE).toString());
         Glide
                 .with(context)
                 .load(UriBuilder.getInstance(context).coverUri(coverId, Constans.IMAGE_SIZE))
                 .into(imageView);
+        imageView.invalidate();
+    }
+
+    @BindingAdapter("tag")
+    public static void tag(View view, int id) {
+        view.setTag(id);
     }
 }

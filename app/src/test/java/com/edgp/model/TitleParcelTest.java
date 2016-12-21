@@ -19,17 +19,18 @@ public class TitleParcelTest {
         Title title = new Title(1, "Name", "Description", "Categories", 121);
 
         Parcel titleParcel = Parcel.obtain();
-        titleParcel.writeValue(title);
+        title.writeToParcel(titleParcel, 0);
 
         assertNotNull(titleParcel);
 
-        Title unparceled = new Title(titleParcel);
+        titleParcel.setDataPosition(0);
+        Title unparceled = (Title)Title.CREATOR.createFromParcel(titleParcel);
 
         assertNotNull(unparceled);
-        assertEquals(1, title.id);
-        assertEquals("Name", title.name);
-        assertEquals("Description", title.description);
-        assertEquals("Categories", title.categories);
-        assertEquals(121, title.coverId);
+        assertEquals(1, unparceled.id);
+        assertEquals("Name", unparceled.name);
+        assertEquals("Description", unparceled.description);
+        assertEquals("Categories", unparceled.categories);
+        assertEquals(121, unparceled.coverId);
     }
 }

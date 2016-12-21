@@ -37,9 +37,9 @@ public class PdfParcelTest {
         assertEquals(1, unparceled.id);
         assertEquals("Name", unparceled.name);
         assertEquals(2, unparceled.articles.size());
-        assertEquals(500, unparceled.articles.get(0).id);
-        assertEquals("Booklet 1", unparceled.articles.get(0).name);
-        assertEquals(600, unparceled.articles.get(1).id);
-        assertEquals("Booklet 2", unparceled.articles.get(1).name);
+        assertEquals(200, unparceled.articles.get(0).id);
+        assertEquals("Article 1", unparceled.articles.get(0).name);
+        assertEquals(300, unparceled.articles.get(1).id);
+        assertEquals("Article 2", unparceled.articles.get(1).name);
     }
 }

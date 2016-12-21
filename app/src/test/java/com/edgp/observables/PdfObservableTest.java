@@ -1,7 +1,7 @@
 package com.edgp.observables;
 
 import com.edgp.Utils;
-import com.edgp.model.Issue;
+import com.edgp.model.Pdf;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +11,6 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import rx.Observer;
@@ -28,7 +27,7 @@ import static org.mockito.Mockito.verify;
  */
 @Config(sdk = 23, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
-public class IssuesObservableTest {
+public class PdfObservableTest {
 
     private CountDownLatch lock = new CountDownLatch(1);
 
@@ -39,13 +38,13 @@ public class IssuesObservableTest {
 
     @Test
     public void getIssues() throws Exception {
-        IssuesObservable.Listener listener = mock(IssuesObservable.Listener.class);
-        final Observer<? super List<Issue>> observer = mock(Observer.class);
-        IssuesObservable issuesObservable = new IssuesObservable(RuntimeEnvironment.application, listener);
+        PdfObservable.Listener listener = mock(PdfObservable.Listener.class);
+        final Observer<? super Pdf> observer = mock(Observer.class);
+        PdfObservable pdfObservable = new PdfObservable(RuntimeEnvironment.application, listener);
 
-        issuesObservable
-                .getIssues(4)
-                .subscribe(new Observer<List<Issue>>() {
+        pdfObservable
+                .getPdf(4577)
+                .subscribe(new Observer<Pdf>() {
                     @Override
                     public void onCompleted() {
                         observer.onCompleted();
@@ -59,15 +58,15 @@ public class IssuesObservableTest {
                     }
 
                     @Override
-                    public void onNext(List<Issue> issues) {
-                        observer.onNext(issues);
+                    public void onNext(Pdf pdf) {
+                        observer.onNext(pdf);
                         lock.countDown();
                     }
                 });
 
         lock.await();
 
-        verify(observer, times(1)).onNext(Matchers.anyListOf(Issue.class));
+        verify(observer, times(1)).onNext(any(Pdf.class));
         verify(observer, never()).onError(any(Throwable.class));
 
         for (int i = 0; i <= 2; i++) {

@@ -6,18 +6,15 @@ import android.support.annotation.IntRange;
 import com.edgp.managers.SettingsManager;
 import com.edgp.model.App;
 import com.edgp.model.Issue;
-import com.edgp.model.IssueExtended;
 import com.edgp.model.Pdf;
 import com.edgp.model.wrappers.AppWrapper;
 import com.edgp.model.Title;
-import com.edgp.model.wrappers.IssueWrapper;
 import com.edgp.model.wrappers.IssuesWrapper;
 import com.edgp.model.wrappers.PdfWrapper;
 import com.edgp.model.wrappers.TitlesWrapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -82,18 +79,6 @@ public class EdgpService {
                 return null;
             }
             return wrapper.issues;
-        }
-        return null;
-    }
-
-    public IssueExtended getIssue(int issueId) throws IOException {
-        Response<IssueWrapper> response = edgpRestService.getIssue(getApiKey(), issueId).execute();
-        if (response.isSuccessful()) {
-            IssueWrapper wrapper = response.body();
-            if (wrapper == null) {
-                return null;
-            }
-            return wrapper.issue;
         }
         return null;
     }

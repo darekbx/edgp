@@ -1,6 +1,5 @@
 package com.edgp.model.wrappers;
 
-import com.edgp.model.IssueExtended;
 import com.edgp.model.Pdf;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

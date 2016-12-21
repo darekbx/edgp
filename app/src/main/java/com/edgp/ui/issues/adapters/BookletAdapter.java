@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import com.edgp.R;
 import com.edgp.databinding.AdapterBookletBinding;
 import com.edgp.model.Booklet;
+import com.edgp.ui.issues.Utils;
 
 /**
  * Created by daba on 2016-12-21.
@@ -37,7 +38,9 @@ public class BookletAdapter extends ArrayAdapter<Booklet> {
     }
 
     @BindingAdapter("tag")
-    public static void tag(View view, int id) {
-        view.setTag(id);
+    public static void tag(View view, Booklet booklet) {
+        if (Utils.hasValidBooklet(booklet)) {
+            view.setTag(booklet.bookletPdfs.get(0).id);
+        }
     }
 }

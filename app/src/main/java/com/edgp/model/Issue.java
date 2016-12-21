@@ -42,7 +42,6 @@ public class Issue implements Parcelable {
         this.booklets = booklets;
     }
 
-
     @Override
     public int describeContents() {
         return 0;

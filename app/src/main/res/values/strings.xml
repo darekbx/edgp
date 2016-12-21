@@ -11,4 +11,7 @@
     <string name="progress_issues_1">Loading issues for title id = %d...</string>
     <string name="progress_issues_2">Loaded %d issues</string>
 
+    <string name="progress_pdf_1">Loading pdf for booklet id = %d...</string>
+    <string name="progress_pdf_2">Loaded %d articles</string>
+
 </resources>

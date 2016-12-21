@@ -19,9 +19,11 @@ public class IssueParcelTest {
 
     @Test
     public void testParcel() {
+        List<BookletPdf> bookletPdfs = new ArrayList<>(1);
+        bookletPdfs.add(new BookletPdf(100));
         List<Booklet> booklets = new ArrayList<>(2);
-        booklets.add(new Booklet(500, "Booklet 1"));
-        booklets.add(new Booklet(600, "Booklet 2"));
+        booklets.add(new Booklet(500, "Booklet 1", bookletPdfs));
+        booklets.add(new Booklet(600, "Booklet 2", new ArrayList<BookletPdf>(0)));
         Issue issue = new Issue(1, "Name", booklets);
 
         Parcel issueParcel = Parcel.obtain();
@@ -38,6 +40,7 @@ public class IssueParcelTest {
         assertEquals(2, unparceled.booklets.size());
         assertEquals(500, unparceled.booklets.get(0).id);
         assertEquals("Booklet 1", unparceled.booklets.get(0).name);
+        assertEquals(1, unparceled.booklets.get(0).bookletPdfs.size());
         assertEquals(600, unparceled.booklets.get(1).id);
         assertEquals("Booklet 2", unparceled.booklets.get(1).name);
     }

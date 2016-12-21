@@ -20,6 +20,12 @@
         <activity
             android:name=".ui.issues.IssuesActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.pdfs.PdfActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.articles.ArticleActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

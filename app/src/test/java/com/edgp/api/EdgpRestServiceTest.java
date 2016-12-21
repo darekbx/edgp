@@ -4,10 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.edgp.Utils;
-import com.edgp.managers.SettingsManager;
 import com.edgp.model.App;
 import com.edgp.model.Issue;
-import com.edgp.model.IssueExtended;
 import com.edgp.model.Pdf;
 import com.edgp.model.Title;
 
@@ -61,14 +59,6 @@ public class EdgpRestServiceTest {
 
         assertNotNull(issues);
         assertTrue(issues.size() > 0);
-    }
-
-    @Test
-    public void getIssue() throws Exception {
-        IssueExtended issue = service.getIssue(850);
-
-        assertNotNull(issue);
-        assertTrue(issue.id > 0);
     }
 
     @Test

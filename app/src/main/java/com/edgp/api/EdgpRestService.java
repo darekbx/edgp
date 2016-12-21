@@ -1,7 +1,6 @@
 package com.edgp.api;
 
 import com.edgp.model.wrappers.AppWrapper;
-import com.edgp.model.wrappers.IssueWrapper;
 import com.edgp.model.wrappers.IssuesWrapper;
 import com.edgp.model.wrappers.PdfWrapper;
 import com.edgp.model.wrappers.TitlesWrapper;
@@ -26,9 +25,6 @@ public interface EdgpRestService {
 
     @GET("{apiKey}/listissues/{titleId}")
     Call<IssuesWrapper> listIssues(@Path(value = "apiKey") String apiKey, @Path(value = "titleId") int titleId);
-
-    @GET("{apiKey}/issue/{issueId}")
-    Call<IssueWrapper> getIssue(@Path(value = "apiKey") String apiKey, @Path(value = "issueId") int issueId);
 
     @GET("{apiKey}/pdf/{pdfId}")
     Call<PdfWrapper> getPdf(@Path(value = "apiKey") String apiKey, @Path(value = "pdfId") int pdfId);

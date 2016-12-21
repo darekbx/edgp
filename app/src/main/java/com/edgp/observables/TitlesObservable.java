@@ -38,7 +38,7 @@ public class TitlesObservable extends BaseObservable {
     private Func1<Void, Observable<App>> createAppFunc() {
         return new Func1<Void, Observable<App>>() {
             @Override
-            public Observable<App> call(Void _) {
+            public Observable<App> call(Void v) {
                 listener.onProgress(0, 4, context.getString(R.string.progress_app_1));
                 try {
                     App app = service.getApp();

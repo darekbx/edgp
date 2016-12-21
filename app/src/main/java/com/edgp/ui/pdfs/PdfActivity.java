@@ -1,4 +1,4 @@
-package com.edgp.ui.issues;
+package com.edgp.ui.pdfs;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,14 +6,13 @@ import android.view.View;
 
 import com.edgp.R;
 import com.edgp.events.FragmentReadyEvent;
-import com.edgp.model.Issue;
+import com.edgp.model.Article;
+import com.edgp.model.Pdf;
 import com.edgp.observables.BaseObservable;
-import com.edgp.observables.IssuesObservable;
+import com.edgp.observables.PdfObservable;
+import com.edgp.ui.articles.ArticleActivity;
 import com.edgp.ui.common.BaseActivity;
 import com.edgp.ui.common.LoadingFragment;
-import com.edgp.ui.pdfs.PdfActivity;
-
-import java.util.ArrayList;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -23,13 +22,13 @@ import rx.schedulers.Schedulers;
  * Created by daba on 2016-12-21.
  */
 
-public class IssuesActivity extends BaseActivity implements BaseObservable.Listener {
+public class PdfActivity extends BaseActivity implements BaseObservable.Listener {
 
-    public static final String TITLE_ID_KEY = "title_id";
-    public static final String ISSUES_PARCEL_KEY = "issues_parcel_key";
+    public static final String PDF_ID_KEY = "pdf_id";
+    public static final String PDF_PARCEL_KEY = "pdf_parcel_key";
 
     private LoadingFragment loadingFragment;
-    private IssuesFragment issuesFragment;
+    private ArticlesFragment articlesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +37,12 @@ public class IssuesActivity extends BaseActivity implements BaseObservable.Liste
         prepareLoadingFragment();
     }
 
-    private void startDataRetrieval(int titleId) {
-        new IssuesObservable(this, this)
-                .getIssues(titleId)
+    private void startDataRetrieval(int pdfId) {
+        new PdfObservable(this, this)
+                .getPdf(pdfId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ArrayList<Issue>>() {
+                .subscribe(new Observer<Pdf>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -55,8 +54,8 @@ public class IssuesActivity extends BaseActivity implements BaseObservable.Liste
                     }
 
                     @Override
-                    public void onNext(ArrayList<Issue> issues) {
-                        prepareIssuesFragment(issues);
+                    public void onNext(Pdf pdf) {
+                        preparePdfFragment(pdf);
                     }
                 });
     }
@@ -64,8 +63,8 @@ public class IssuesActivity extends BaseActivity implements BaseObservable.Liste
     @Override
     protected void onBusEvent(Object event) {
         if (event instanceof FragmentReadyEvent) {
-            int titleId = getTitleId();
-            startDataRetrieval(titleId);
+            int pdfId = getPdfId();
+            startDataRetrieval(pdfId);
         }
     }
 
@@ -82,14 +81,14 @@ public class IssuesActivity extends BaseActivity implements BaseObservable.Liste
         });
     }
 
-    public void onBookletClick(View view) {
-        Intent intent = new Intent(this, PdfActivity.class);
-        intent.putExtra(PdfActivity.PDF_ID_KEY, (int)view.getTag());
+    public void onArticleClick(View view) {
+        Intent intent = new Intent(this, ArticleActivity.class);
+        intent.putExtra(ArticleActivity.ARTICLE_KEY, (Article)view.getTag());
         startActivity(intent);
     }
 
-    private int getTitleId() {
-        return getIntent().getIntExtra(TITLE_ID_KEY, 0);
+    private int getPdfId() {
+        return getIntent().getIntExtra(PDF_ID_KEY, 0);
     }
 
     private void prepareLoadingFragment() {
@@ -99,17 +98,17 @@ public class IssuesActivity extends BaseActivity implements BaseObservable.Liste
                 .commit();
     }
 
-    private void prepareIssuesFragment(ArrayList<Issue> issues) {
+    private void preparePdfFragment(Pdf pdf) {
         if (isDestroyed()) {
             return;
         }
         Bundle bundle = new Bundle(1);
-        bundle.putParcelableArrayList(ISSUES_PARCEL_KEY, issues);
-        issuesFragment = new IssuesFragment();
-        issuesFragment.setArguments(bundle);
+        bundle.putParcelable(PDF_PARCEL_KEY, pdf);
+        articlesFragment = new ArticlesFragment();
+        articlesFragment.setArguments(bundle);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, issuesFragment)
+                .replace(R.id.container, articlesFragment)
                 .commit();
     }
 }

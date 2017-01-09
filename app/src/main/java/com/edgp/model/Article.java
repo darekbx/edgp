@@ -45,6 +45,10 @@ public class Article implements Parcelable {
         this.type = type;
     }
 
+    public boolean isLukaszBak() {
+        return content.contains("Bąk");
+    }
+
     @Override
     public int describeContents() {
         return 0;

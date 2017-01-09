@@ -21,7 +21,7 @@
             android:layout_centerVertical="true"
             android:text="@{article.name}"
             android:textSize="16dp"
-            android:textColor="@color/default_font"
+            android:textColor="@{article.isLukaszBak() ? @color/red_font : @color/default_font}"
             />
 
     </RelativeLayout>
